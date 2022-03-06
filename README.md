@@ -10,7 +10,6 @@ the search term should be an idema code, or a string representing a location nam
 
 In examples:
 - main.py 3194U
-or
 - main.py "MADRID UNIVERSITARIA"
 
 If there are more than one result, them will be shown, ordered by relevance, and you can choose the desired location.
