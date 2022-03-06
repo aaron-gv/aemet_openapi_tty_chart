@@ -8,7 +8,15 @@ from vega_datasets import data
 import sys
 
 if len(sys.argv) < 2:
-    print("insufucientes parámetros. un parametro obligatorio : idema / nombre estacion meteorologica | Not enough parameters. One required: idema / meteorologic station name")
+    print("insufucientes parámetros. un parametro obligatorio : idema / nombre estacion meteorologica")
+    print("Not enough parameters. One required: idema / meteorologic station name")
+    quit()
+
+key = os.environ.get('OPENAPI_KEY')
+
+if key == None:
+    print("No se ha encontrado la variable de entorno necesaria: OPENAPI_KEY . debe contener una key valida para Aemet OpenData. visite https://opendata.aemet.es/centrodedescargas/altaUsuario? para obtenerla, luego asigne la variable de entorno.")
+    print("required environment variable: OPENAPI_KEY was not found in the system. It may contains a valid Aemet OpenData key. visit https://opendata.aemet.es/centrodedescargas/altaUsuario? to get one, then set the environment variable.")
     quit()
 
 needle = sys.argv[1].upper()
@@ -62,8 +70,6 @@ print("")
 print("obteniendo información de "+matches[selected]["idema"]+" - "+matches[selected]["ubi"])
 print("gathering information for "+matches[selected]["idema"]+" - "+matches[selected]["ubi"])
 idema = matches[selected]["idema"]
-
-key = os.environ.get('OPENAPI_KEY')
 
 conn = http.client.HTTPSConnection("opendata.aemet.es")
 
