@@ -38,7 +38,7 @@ def printOptions(error = False):
     index = 0
     print("")
     if error:
-        print("Error, ha introducido un valor incorrecto. admitidos: 0-"+str(len(matches)))
+        print("Error, ha introducido un valor incorrecto. admitidos: 0-"+str((len(matches)-1)))
     while index < (len(matches)):
         print(str(index) + ". " + matches[index]["idema"] + " " + matches[index]["ubi"])
         index+=1
@@ -50,8 +50,8 @@ if len(matches) < 1:
     print("No meteoroligic stations found by: "+needle)
     quit()
 elif len(matches) > 1:
-    print("hay varios resultados, elija uno : ")
-    print("more than one match found, choose one : ")
+    print("hay varios resultados, elija uno 0-"+str((len(matches) - 1))+" : ")
+    print("more than one match found, choose one 0-"+str((len(matches) - 1))+" : ")
     selected = -1
     error = False
     while selected < 0 or selected > len(matches):
@@ -75,7 +75,7 @@ conn.request("GET", "/opendata/api/observacion/convencional/datos/estacion/"+ide
 
 res = conn.getresponse()
 data = res.read()
-decoded_request = json.loads(data.decode("utf-8"))
+decoded_request = json.loads(data.decode("ISO-8859-15"))
 
 pos = decoded_request["datos"].index("opendata.aemet.es") + 17
 
@@ -83,7 +83,7 @@ url = decoded_request["datos"][pos:(len(decoded_request["datos"])+1)]
 conn.request("GET", url, headers=headers)
 res = conn.getresponse()
 data = res.read()
-decoded_data = sorted(json.loads(data.decode("utf-8")), key = lambda i: i['fint'],reverse=True)
+decoded_data = sorted(json.loads(data.decode("ISO-8859-15")), key = lambda i: i['fint'],reverse=True)
 
 '''
 prec = precipitacion
